@@ -1,5 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'models/iten.dart';
 
@@ -62,6 +63,23 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Future load() async {
+    var prefs = await SharedPreferences.getInstance();
+    var data = prefs.getString('data'); //sera salvo no formato json
+
+    if (data != null) {
+      //tranformar de string pra json
+      Iterable decoded = jsonDecode(data);
+      List<Iten> result = decoded.map((e) => Iten.fromJson(e)).toList();
+      setState(() {
+        widget.itens = result;
+      });
+    }
+  }
+
+  _HomePageState() {
+    load();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
