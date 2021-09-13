@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'models/iten.dart';
 
@@ -53,6 +55,13 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  //removendo itens
+  void remove(int index) {
+    setState(() {
+      widget.itens.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,14 +91,25 @@ class _HomePageState extends State<HomePage> {
         itemBuilder: (BuildContext ctxt, int index) {
           final iten = widget.itens[index];
 
-          return CheckboxListTile(
-            title: Text(iten.title),
+          return Dismissible(
+            child: CheckboxListTile(
+              title: Text(iten.title),
+              value: iten.done,
+              onChanged: (value) {
+                setState(() {
+                  iten.done = value!;
+                });
+              },
+            ),
             key: Key(iten.title),
-            value: iten.done,
-            onChanged: (value) {
-              setState(() {
-                iten.done = value!;
-              });
+            background: Container(
+              color: Colors.red.withOpacity(0.2),
+              child: Icon(
+                Icons.remove,
+              ),
+            ),
+            onDismissed: (direction) {
+              remove(index);
             },
           );
         },
