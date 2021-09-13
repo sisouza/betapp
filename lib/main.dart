@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'models/iten.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,7 +30,21 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  List<Iten> itens = <Iten>[];
+
+//construtor
+  HomePage() {
+    itens = [];
+    itens.add(Iten(title: "Item 1", done: false));
+    itens.add(Iten(title: "Item 2", done: true));
+  }
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,8 +54,14 @@ class HomePage extends StatelessWidget {
           Icon(Icons.plus_one),
         ],
       ),
-      body: Container(
-        child: Center(child: Text("Oi")),
+
+      //vai mostrar os itens na tela baseado no tamanho deles
+      body: ListView.builder(
+        itemCount: widget.itens.length,
+        //aqui é o que vai mostrar na tela e como vai mostar design
+        itemBuilder: (BuildContext ctxt, int index) {
+          return Text(widget.itens[index].title);
+        },
       ),
     );
   }
