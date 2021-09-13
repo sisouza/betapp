@@ -53,6 +53,7 @@ class _HomePageState extends State<HomePage> {
         ),
       );
       newTaskCtrl.text = "";
+      save();
     });
   }
 
@@ -60,6 +61,7 @@ class _HomePageState extends State<HomePage> {
   void remove(int index) {
     setState(() {
       widget.itens.removeAt(index);
+      save();
     });
   }
 
@@ -75,6 +77,12 @@ class _HomePageState extends State<HomePage> {
         widget.itens = result;
       });
     }
+  }
+
+  save() async {
+    var prefs = await SharedPreferences.getInstance();
+    //salvar e transformar em uma lista string json
+    await prefs.setString('data', jsonEncode(widget.itens));
   }
 
   _HomePageState() {
@@ -116,6 +124,7 @@ class _HomePageState extends State<HomePage> {
               onChanged: (value) {
                 setState(() {
                   iten.done = value!;
+                  save();
                 });
               },
             ),
