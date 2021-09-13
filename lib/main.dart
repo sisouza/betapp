@@ -60,7 +60,14 @@ class _HomePageState extends State<HomePage> {
         itemCount: widget.itens.length,
         //aqui é o que vai mostrar na tela e como vai mostar design
         itemBuilder: (BuildContext ctxt, int index) {
-          return Text(widget.itens[index].title);
+          final iten = widget.itens[index];
+
+          return CheckboxListTile(
+            title: Text(iten.title),
+            key: Key(iten.title),
+            value: iten.done,
+            onChanged: (value) {},
+          );
         },
       ),
     );
