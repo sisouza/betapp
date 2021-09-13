@@ -66,7 +66,11 @@ class _HomePageState extends State<HomePage> {
             title: Text(iten.title),
             key: Key(iten.title),
             value: iten.done,
-            onChanged: (value) {},
+            onChanged: (value) {
+              setState(() {
+                iten.done = value!;
+              });
+            },
           );
         },
       ),
