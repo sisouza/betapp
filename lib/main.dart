@@ -39,6 +39,20 @@ class _HomePageState extends State<HomePage> {
   //controller para o texto
   var newTaskCtrl = TextEditingController();
 
+  //adicionando um item a lista
+  void add() {
+    if (newTaskCtrl.text.isEmpty) return;
+    setState(() {
+      widget.itens.add(
+        Iten(
+          title: newTaskCtrl.text,
+          done: false,
+        ),
+      );
+      newTaskCtrl.text = "";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,6 +94,10 @@ class _HomePageState extends State<HomePage> {
           );
         },
       ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: add,
+          child: Icon(Icons.add),
+          backgroundColor: Colors.lightBlueAccent),
     );
   }
 }
