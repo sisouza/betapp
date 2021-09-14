@@ -1,8 +1,8 @@
 class Iten {
-  String title;
-  bool done;
+  String title = '';
+  bool done = false;
 
-  Iten({this.title, this.done});
+  Iten({required this.title, required this.done});
 
   //converter o objeto de string pra json
   Iten.fromJson(Map<String, dynamic> json) {
